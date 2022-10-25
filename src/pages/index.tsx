@@ -6,8 +6,8 @@ export default function Home({ data: { allPosts } }) {
       <div className="container grid flex-col justify-center min-h-screen grid-cols-3 gap-3 p-4 mx-auto">
         {allPosts?.map((post) => (
           <div key={post.id} className="p-4 bg-white rounded-lg shadow">
-            <h1 className="text-2xl font-bold text-red-500">{post.title}</h1>
-            <p className="mt-2 text-gray-600">{post.id}</p>
+            <h1 className="text-2xl font-bold text-red-500">{post?.title}</h1>
+            <p className="mt-2 text-gray-600">{post?.id}</p>
           </div>
         ))}
       </div>
