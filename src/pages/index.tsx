@@ -1,6 +1,15 @@
 import { gql, GraphQLClient } from "graphql-request";
+import { useEffect } from "react";
 
 export default function Home({ data: { allPosts } }) {
+  function revalidate() {
+    fetch("/api/revalidate");
+  }
+
+  useEffect(() => {
+    revalidate();
+  }, []);
+
   return (
     <div className="bg-gray-200">
       <div className="container grid flex-col justify-center min-h-screen grid-cols-3 gap-3 p-4 mx-auto">
@@ -10,6 +19,7 @@ export default function Home({ data: { allPosts } }) {
             <p className="mt-2 text-gray-600">{post?.id}</p>
           </div>
         ))}
+        <button onClick={() => revalidate()}>Revalidate</button>
       </div>
     </div>
   );
