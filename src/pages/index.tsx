@@ -6,8 +6,6 @@ export default function Home({ data: { allPosts } }) {
     fetch("/api/revalidate");
   }
 
-  revalidate();
-
   return (
     <div className="bg-gray-200">
       <div className="container grid flex-col justify-center min-h-screen grid-cols-3 gap-3 p-4 mx-auto">
@@ -46,6 +44,6 @@ export async function getStaticProps() {
     props: {
       data,
     },
-    // revalidate: 10,
+    revalidate: 10,
   };
 }
