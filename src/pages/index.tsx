@@ -6,9 +6,7 @@ export default function Home({ data: { allPosts } }) {
     fetch("/api/revalidate");
   }
 
-  useEffect(() => {
-    revalidate();
-  }, []);
+  revalidate();
 
   return (
     <div className="bg-gray-200">
