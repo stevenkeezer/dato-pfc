@@ -19,7 +19,6 @@ export default function Home({ data: { allPosts } }) {
             <p className="mt-2 text-gray-600">{post?.id}</p>
           </div>
         ))}
-        <button onClick={() => revalidate()}>Revalidate</button>
       </div>
     </div>
   );
