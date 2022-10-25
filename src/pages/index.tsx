@@ -1,11 +1,44 @@
-export default function Home() {
+import { gql, GraphQLClient } from "graphql-request";
+
+export default function Home({ data: { allPosts } }) {
   return (
-    <div className="container flex items-center p-4 mx-auto min-h-screen justify-center">
-      <main>
-        <h1 className="font-mono text-xl code">
-          Welcome to <span className="text-purple-700">Nextjs</span>, <span className="text-indigo-700">TailwindCSS</span> and <span className="text-gray-700">TypeScript</span>
-        </h1>
-      </main>
+    <div className="bg-gray-200">
+      <div className="container grid flex-col justify-center min-h-screen grid-cols-3 gap-3 p-4 mx-auto">
+        {allPosts?.map((post) => (
+          <div key={post.id} className="p-4 bg-white rounded-lg shadow">
+            <h1 className="text-2xl font-bold text-red-500">{post.title}</h1>
+            <p className="mt-2 text-gray-600">{post.id}</p>
+          </div>
+        ))}
+      </div>
     </div>
-  )
+  );
+}
+
+const query = gql`
+  query {
+    allPosts {
+      id
+      title
+    }
+  }
+`;
+
+export async function getStaticProps() {
+  const graphcms = "https://graphql.datocms.com/";
+  const graphcmsClient = new GraphQLClient(graphcms, {
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${process.env.DATOCMS_API_TOKEN}`,
+    },
+  });
+
+  const data = await graphcmsClient.request(query);
+
+  return {
+    props: {
+      data,
+    },
+    revalidate: 10,
+  };
 }
